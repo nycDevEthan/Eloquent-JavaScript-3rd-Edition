@@ -120,6 +120,7 @@ reverseArray([1, 2, 3, 4, 5]);
 // A linked list
 // A nice thing about lists is that they can share parts of their structure. For example, if I create two new values {value: 0, rest: list} and {value: -1, rest: list} (with list referring to the binding defined earlier), they are both independent lists, but they share the structure that makes up their last three elements. The original list is also still a valid three-element list.
 // Write a function arrayToList that builds up a list structure like the one shown when given [1, 2, 3] as argument.
+// couldn't figure this one out, had to study solution code to improve my understanding
 
 function arrayToList(arr) {
     let list = null;
@@ -147,10 +148,73 @@ function listToArray(list) {
 
 console.log(listToArray(arrayToList([10, 20, 30])));
 
-// Then add a helper function prepend, which takes an element and a list and creates a new list that adds the element to the front of the input list, and nth, which takes a list and a number and returns the element at the given position in the list (with zero referring to the first element) or undefined when there is no such element.
+// Then add a helper function prepend, which takes an element and a list and creates a new list that adds the element to the front of the input list,
+// couldn't figure this one out, had to study solution code to improve my understanding
 
+function prepend(value, list) {
+    return {value, rest: list};
+}
 
+prepend(10, prepend(20, prepend(30, prepend(40, prepend(50, null)))));
 
+// and nth, which takes a list and a number and returns the element at the given position in the list (with zero referring to the first element) or undefined when there is no such element.
+// couldn't figure this one out, had to study solution code to improve my understanding
+
+function nth(list, num) {
+    if (!list) return undefined;
+    else if (num === 0) return list.value;
+    else return nth(list.rest, num - 1);
+}
+
+nth({value: 1, rest: {value: 2, rest: {value: 3, rest: {value: 4, rest: {value: 5, rest: null}}}}}, 3);
+
+// Deep comparison
+// The == operator compares objects by identity. But sometimes you’d prefer to compare the values of their actual properties.
+
+// Write a function deepEqual that takes two values and returns true only if they are the same value or are objects with the same properties, where the values of the properties are equal when compared with a recursive call to deepEqual.
+
+// To find out whether values should be compared directly (use the === operator for that) or have their properties compared, you can use the typeof operator. If it produces "object" for both values, you should do a deep comparison. But you have to take one silly exception into account: because of a historical accident, typeof null also produces "object".
+
+// The Object.keys function will be useful when you need to go over the properties of objects to compare them.
+
+function deepEqual(obj1, obj2) {
+    let obj1Arr = Object.keys(obj1);
+    let obj2Arr = Object.keys(obj2);
+    if (typeof obj1 === "object" && typeof obj2 === "object" && obj1Arr === obj2Arr) return true;
+    else if (typeof obj1 !== "object" || typeof obj2 !== "object") return false;
+}
+
+let obj1 = {
+    a: 'somestring',
+    b: 42,
+    c: false
+}
+
+let obj2 = {
+    a: 'somestring',
+    b: 42,
+    c: false
+}
+
+// {
+//     a: 'astring',
+//     b: 59,
+//     c: true
+// }
+
+deepEqual(obj1, obj2);
+
+// let obj1 = {
+//     a: 'somestring',
+//     b: 42,
+//     c: false
+// }
+
+// let obj2 = {
+//     a: 'somestring',
+//     b: 42,
+//     c: false
+// }
 
 
 
